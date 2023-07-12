@@ -1,0 +1,42 @@
+{% extends 'Pro/base.html' %}
+
+{% block name %}
+    {{ name }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'Pro/inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="title" style="margin-left: 330px"><h2>Список сотрудников</h2></div>
+    {% for item in human %}
+        <div class="card mb-3" style="width: 950px; border: 1px solid #000;">
+            <div class="num" style="margin-left: 7px;">{{ forloop.counter }}</div>
+            <div class="card-header">
+                Профессия: <a href="{{ item.profession.get_absolute_url2 }}">{{ item.profession.name }}</a>
+            </div>
+                <div class="media-photo">
+                {% if item.photo %}
+                <img src="{{ item.photo.url }}" class="mr-3" width="parent" alt="Photo" height="250" style="margin-left: 400px;">
+                {% else %}
+                <h6 style="margin-left: 48%; margin-top: 10px;">Фото нет</h6>
+                {% endif %}
+            </div>
+            <div class="media-body" style="margin-left: 40px; text-align: center;">
+                <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}" style="margin-top: 20px;">{{ item.name }}</h5>
+                {% autoescape off %}
+                <p class="card-text">{{ item.birthday|truncatewords:60|linebreaks }}</p>
+                {% endautoescape %}
+                <a href="{{ item.get_absolute_url }}" class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #000;">Узнать больше</a>
+            </div>
+          <div class="card-footer text-muted">
+              <div class="age" style="align-text: left;">
+                  Возраст: {{ item.age }}
+              </div>
+          </div>
+        </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

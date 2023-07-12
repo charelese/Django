@@ -1,0 +1,39 @@
+{% extends 'Pro/base.html' %}
+
+{% block name %}
+    {{ name }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'Pro/inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="title" style="text-align: center;"><h2>Режим просмотра сотрудника</h2></div>
+<div class="card mb-3" style="width: 900px; border: 1px solid #000;">
+     {{ forloop.counter }}
+    <div class="card-header">
+        Профессия: <a href="{{ human_item.profession.get_absolute_url2 }}">{{ human_item.profession.name }}</a>
+    </div>
+    <div class="card-body">
+        {% if human_item.photo %}
+        <img src="{{ human_item.photo.url }}" class="mr-3" width="350" alt="Photo" style="margin-left: 400px;">
+        {% else %}
+    <h6 style="margin-left: 45%;">Фото нет</h6>
+    {% endif %}
+    </div>
+    <div class="card-body">
+    <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}" style="margin-left: 400px; margin-top: 20px;">{{ human_item.name }}</h5>
+    {% autoescape off %}
+    <div class="content" style="text-align: center;">
+        <p class="card-text">{{ human_item.birthday|linebreaks }}</p>
+    </div>
+    {% endautoescape %}
+    </div>
+    <div class="card-footer text-muted" >
+        <div class="age" style="text-align: center;">
+            {{ human_item.age }}
+        </div>
+    </div>
+</div>
+{% endblock %}

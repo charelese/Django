@@ -1,0 +1,10 @@
+{% load news_tags %}
+<div class="list-group">
+    <div class="size"><h5>
+         <div class="size2" style="margin: 11px;">{{ arg1 }} {{ arg2 }}</div>
+        {% for cat in categories %}
+        <a href="{{ cat.get_absolute_url }}" class="list-group-item list-group-item-action" style="margin-bottom: 10px; border-radius: 10px; border: 1px solid #000; display: block;">{{ cat.title }}
+            <span class="badge bg-primary rounded-pill" style="width: 30px; color:white;">{{ cat.cnt }}</span></a>
+        {% endfor %}</h5>
+    </div>
+</div>

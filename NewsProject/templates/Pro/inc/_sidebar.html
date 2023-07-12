@@ -1,0 +1,13 @@
+{% load human_tags %}
+{% get_list_professions as professions %}
+{% comment %}
+<div class="list-group">
+<!--    {{ arg1 }} {{ arg2 }}-->
+<!--    {% get_list_professions as professions %}-->
+<!--    {% show_professions %}-->
+    {% for prof in professions %}
+    <a href="{% url 'Profession' prof.pk %}" class="list-group-item list-group-item-action">{{ prof.name }}<span class="badge bg-primary rounded-pill" style="width: 30px; color:white;"> 14</span></a>
+    {% endfor %}
+</div>
+{% endcomment %}
+{% show_professions %}

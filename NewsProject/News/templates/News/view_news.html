@@ -1,0 +1,39 @@
+{% extends 'News/base.html' %}
+
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+{% include 'News/inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="title" style="text-align: center;"><h2>Режим подробного просмотра новости</h2></div>
+<div class="card mb-3" style="width: 900px; border: 1px solid #000;">
+     {{ forloop.counter }}
+    <div class="card-header">
+        Категория: <a href="{{ news_item.category.get_absolute_url }}">{{ news_item.category }}</a>
+    </div>
+    <div class="card_body">
+        {% if news_item.photo %}
+        <img src="{{ news_item.photo.url }}" class="mr-3" width="parent" alt="Photo" height="400" style="margin-left: 100px;">
+        {% else %}
+        <h6>фото нет</h6>
+        {% endif %}
+    </div>
+    <div class="card-body">
+    <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}" style="text-align: center; margin-top: 20px;">{{ news_item.title }}</h5>
+    {% autoescape off %}
+    <div class="content" style="text-align: center; margin: 10px;">
+       <p class="card-text">{{ news_item.content|linebreaks }}</p>
+    </div>
+    {% endautoescape %}
+    </div>
+    <div class="card-footer text-muted" >
+        <div class="date" style="text-align: center;">
+            {{ news_item.created_at|date:'y-m-d h:i' }}
+        </div>
+    </div>
+</div>
+{% endblock %}

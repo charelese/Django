@@ -1,0 +1,42 @@
+{% extends 'News/base.html' %}
+
+{% block title %}
+    {{ title }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+    {% include 'News/inc/_sidebar.html' %}
+{% endblock %}
+
+{% block content %}
+<div class="title" style="margin-left: 350px"><h2>{{ title }}</h2></div>
+    {% for item in news %}
+    <div class="card mb-3" style="width: 950px; border: 1px solid #000;">
+        <div class="num" style="margin-left: 7px;">{{ forloop.counter }}</div>
+        <div class="card-header">
+            Категория: <a href="{{ item.category.get_absolute_url }}">{{ item.category.title }}</a>
+        </div>
+        <div class="media-photo">
+            {% if item.photo %}
+            <img src="{{ item.photo.url }}" class="mr-3" width="parent" alt="Photo" height="250" style="margin-left: 250px;">
+            {% else %}
+            <h6>Фото нет</h6>
+            {% endif %}
+        </div>
+        <div class="media-body" style="text-align: center; margin: 10px;">
+            <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}" style="margin-top: 20px;">{{ item.title }}</h5>
+            {% autoescape off %}
+            <p class="card-text">{{ item.content|truncatewords:100|linebreaks }}</p>
+            {% endautoescape %}
+            <a href="{{ item.get_absolute_url }}" class="btn btn-primary" style="margin-top: 20px; margin-bottom: 20px; border: 1px solid #000;">Читать подробнее</a>
+        </div>
+        <div class="card-footer text-muted">
+          <div class="date" style="text-align: center;">
+              {{ item.created_at|date:'Y-m-d H:i' }}
+          </div>
+      </div>
+    </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}

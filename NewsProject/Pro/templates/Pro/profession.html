@@ -1,0 +1,44 @@
+{% extends 'Pro/base.html' %}
+{% include 'Pro/inc/_sidebar.html' %}
+
+{% block name %}
+    {{ profession.name }} :: {{ block.super }}
+{% endblock %}
+
+{% block sidebar %}
+                    <div class="list-group">
+                        {% for prof in professions %}
+                        <a href="{% url 'Profession' prof.pk %}" class="list-group-item list-group-item-action">{{ prof.name }}</a>
+                          {% endfor %}
+                    </div>
+{% endblock %}
+
+{% block content %}
+    {% for item in human %}
+        <div class="card mb-3">
+             {{ forloop.counter }}
+                <div class="card-header">
+                    Профессия: <a href="{% url 'Profession' item.profession.pk %}">{{ item.profession }}</a>
+                </div>
+                <div class="media-photo">
+                {% if item.photo %}
+                    <img src="{{ item.photo.url }}" class="mr-3" width="350" alt="Photo">
+                {% else %}
+                <h6>Фото нет</h6>
+                {% endif %}
+            </div>
+            <div class="card-body">
+            <h5 class="card-title {% cycle 'text-success' 'text-danger' 'text-primary' %}">{{ item.name }}</h5>
+              {% autoescape off %}
+            <p class="card-text">{{ item.birthday|truncatewords:60|linebreaks }}</p>
+              {% endautoescape %}
+            <a href="#" class="btn btn-primary">Read more...</a>
+          </div>
+          <div class="card-footer text-body-secondary">
+            {{ item.created_at|date:'Y-m-d H:i' }}
+          </div>
+        </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
